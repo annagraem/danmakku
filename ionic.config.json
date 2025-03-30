@@ -1,0 +1,7 @@
+{
+  "name": "Danmakku",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
