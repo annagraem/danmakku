@@ -1,26 +1,32 @@
 import { Component, inject } from '@angular/core';
-import { RefresherCustomEvent } from '@ionic/angular';
-import { MessageComponent } from '../message/message.component';
-
-import { DataService, Message } from '../services/data.service';
+import { Router, RouterModule } from '@angular/router';
+import { IonicModule } from '@ionic/angular';
+import { Painting } from '../models/painting';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  standalone: false,
+  standalone: true,
+  imports: [
+    IonicModule,
+    RouterModule,
+  ]
 })
 export class HomePage {
-  private data = inject(DataService);
-  constructor() {}
+  private readonly router = inject(Router);
 
-  refresh(ev: any) {
-    setTimeout(() => {
-      (ev as RefresherCustomEvent).detail.complete();
-    }, 3000);
-  }
+  readonly paintings: Painting[] = [
+    {
+      id: 'kid-lantern',
+      name: 'ランターンの子',
+      imageSrc: 'assets/illustrations/painting-mock.jpeg',
+      videoSrc: '',
+      audioSrc: ''
+    }
+  ]
 
-  getMessages(): Message[] {
-    return this.data.getMessages();
+  goToPlayer(id: string) {
+    this.router.navigate(['player', id]);
   }
 }

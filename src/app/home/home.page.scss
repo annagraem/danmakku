@@ -1,0 +1,79 @@
+ion-content {
+  --base-font-size: 22px;
+  font-size: var(--base-font-size);
+  --background: rgb(0,9,23);
+  --background: radial-gradient(circle, rgba(0,9,23,1) 0%, rgba(33,46,65,1) 100%);
+}
+
+@mixin reduced-opacity() {
+  opacity: 0.8;
+}
+
+header {
+  margin-top: 50px;
+  margin-bottom: -20px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  text-align: center;
+  @include reduced-opacity();
+
+  line-height: 1.1;
+
+  ion-icon {
+    -webkit-animation: slide 2s ease-in-out infinite;
+    animation: slide 2s ease-in-out infinite;
+    @-webkit-keyframes slide {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(5px); }
+      100% { transform: translateY(0px); }
+    }
+    @keyframes slide {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(5px); }
+      100% { transform: translateY(0px); }
+    }
+  }
+}
+
+// TODO manage multiple paintings
+.centered-painting {
+  position: relative;
+  width: 80vw;
+  height: 80vh;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .painting-flourishes {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    @include reduced-opacity();
+  }
+
+  .painting-content {
+    --horizontal-padding: 100px;
+    margin-top: 15px;
+    padding-left: var(--horizontal-padding);
+    padding-right: var(--horizontal-padding);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 39px;
+  }
+
+  .painting-image {
+    box-shadow: 0px 4px 30px 1px rgba(0,9,23,0.6);
+  }
+
+  .painting-name {
+    @include reduced-opacity();
+  }
+}
