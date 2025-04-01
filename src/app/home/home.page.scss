@@ -5,6 +5,12 @@ ion-content {
   --background: radial-gradient(circle, rgba(0,9,23,1) 0%, rgba(33,46,65,1) 100%);
 }
 
+.main-container {
+  display: flex;
+  flex-direction: column;
+  gap: 46px;
+}
+
 @mixin reduced-opacity() {
   opacity: 0.8;
 }
@@ -42,7 +48,6 @@ header {
 .centered-painting {
   position: relative;
   width: 80vw;
-  height: 80vh;
   margin: auto;
   display: flex;
   justify-content: center;
@@ -58,10 +63,11 @@ header {
   }
 
   .painting-content {
-    --horizontal-padding: 100px;
-    margin-top: 15px;
+    --horizontal-padding: 90px;
     padding-left: var(--horizontal-padding);
     padding-right: var(--horizontal-padding);
+    position: absolute;
+    top: 95px;
 
     display: flex;
     flex-direction: column;

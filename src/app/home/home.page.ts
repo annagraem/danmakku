@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { Painting } from '../models/painting';
+import { PaintingService } from '../services/painting.service';
 
 @Component({
   selector: 'app-home',
@@ -14,17 +14,8 @@ import { Painting } from '../models/painting';
   ]
 })
 export class HomePage {
+  readonly paintingService = inject(PaintingService);
   private readonly router = inject(Router);
-
-  readonly paintings: Painting[] = [
-    {
-      id: 'kid-lantern',
-      name: 'ランターンの子',
-      imageSrc: 'assets/illustrations/painting-mock.jpeg',
-      videoSrc: '',
-      audioSrc: ''
-    }
-  ]
 
   goToPlayer(id: string) {
     this.router.navigate(['player', id]);

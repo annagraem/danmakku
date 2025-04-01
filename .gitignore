@@ -68,3 +68,7 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+
+/src/assets/painting-mock.mp4
+/src/assets/painting-mock.mp3

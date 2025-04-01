@@ -1,17 +1,19 @@
-<ion-content [fullscreen]="true">
-  <header>
-    <span class="hint">Cliquer pour<br/>écouter la musique</span>
-    <ion-icon src="assets/images/arrow.svg"></ion-icon>
-  </header>
-  <div class="paintings">
-    @for (painting of paintings; track painting.id) {
-      <div class="painting centered-painting" (click)="goToPlayer(painting.id)">
-        <img class="painting-flourishes" src="assets/illustrations/flourishes.png"/>
-        <div class="painting-content">
-          <img class="painting-image" [src]="painting.imageSrc" />
-          <span class="painting-name">~| {{ painting.name }} |~</span>
+<ion-content [fullscreen]="true" scroll-y="false">
+  <div class="main-container">
+    <header>
+      <span class="hint">Cliquer pour<br/>écouter la musique</span>
+      <ion-icon src="assets/images/arrow.svg"></ion-icon>
+    </header>
+    <div class="paintings">
+      @for (painting of paintingService.getAllPaintings(); track painting.id) {
+        <div class="painting centered-painting" (click)="goToPlayer(painting.id)">
+          <img class="painting-flourishes" src="assets/illustrations/flourishes.png"/>
+          <div class="painting-content">
+            <img class="painting-image" [src]="painting.imageSrc" />
+            <span class="painting-name">~| {{ painting.name }} |~</span>
+          </div>
         </div>
-      </div>
-    }
+      }
+    </div>
   </div>
 </ion-content>
