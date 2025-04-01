@@ -1,5 +1,32 @@
-
 <ion-content [fullscreen]="true">
-  <button (click)="goBack()">BACK</button>
-  <span>Player {{ id }}</span>
+  <div class="main-container">
+    @if (painting) {
+      <video autoplay="true" [muted]="'true'" loop="true" [poster]="painting.imageSrc">
+        <source [src]="painting.videoSrc" type="video/mp4" />
+      </video>
+
+      <audio #audio autoplay="true" [src]="painting.audioSrc"
+        (loadedmetadata)="onLoadedMetadata()" (play)="onPlaying()" (pause)="onPausing()" (ended)="onEnded()" (timeupdate)="onTimeUpdate()" >
+      </audio>
+
+      <div class="overlay">
+        <div class="audio-controls">
+          <input type="range" class="time-slider"
+            min="0" [max]="$audioDuration()" [value]="$audioCurrentTime()"
+            (input)="onSliderChangeEnd($event)" />
+          <div class="current-time">{{ $audioCurrentTimeFormatted() }}</div>
+          <ion-button class="play-pause-button" fill="clear" mode="md" (click)="togglePlayPause()">
+            <ion-icon [src]="'assets/images/' + ($isAudioPlaying() ? 'pause' : 'play') + '.svg'"></ion-icon>
+          </ion-button>
+        </div>
+        <div class="volume-control">
+
+        </div>
+      </div>
+    }
+
+    <ion-button class="back-button" fill="clear" mode="md" (click)="goBack()">
+      <ion-icon src="assets/images/arrow.svg"></ion-icon>
+    </ion-button>
+  </div>
 </ion-content>

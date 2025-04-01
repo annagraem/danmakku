@@ -1,0 +1,68 @@
+:host {
+  --margin: 50px;
+}
+
+ion-content {
+  --overflow: hidden;
+}
+
+ion-button {
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+  overflow: hidden;
+}
+
+.main-container {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.back-button {
+  position: absolute;
+  top: calc(var(--margin) - 25px);
+  left: calc(var(--margin) - 15px);
+
+  ion-icon {
+    transform: rotate(90deg);
+    background: none;
+  }
+}
+
+.overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 254px;
+  background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+
+  padding: var(--margin);
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.audio-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .time-slider {
+    width: 100%;
+
+
+  }
+
+  .current-time {
+    width: 100%;
+    text-align: right;
+  }
+}
