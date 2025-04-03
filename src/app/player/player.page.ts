@@ -38,6 +38,13 @@ export class PlayerPage implements OnInit {
   });
   $isAudioPlaying = signal(false);
 
+  private readonly sliderLeftColor = 'rgba(255, 255, 255, 0.5)';
+  private readonly sliderRightColor = 'rgba(255, 255, 255, 0.15)';
+  $timeSliderBg = computed(() => {
+    const currentPercentage = this.$audioCurrentTime() / this.$audioDuration() * 100;
+    return `linear-gradient(to right, ${this.sliderLeftColor} 0%, ${this.sliderLeftColor} ${currentPercentage}%, ${this.sliderRightColor} ${currentPercentage}%, ${this.sliderRightColor} 100%)`;
+  });
+
   constructor() {}
 
   ngOnInit() {

@@ -11,16 +11,18 @@
 
       <div class="overlay">
         <div class="audio-controls">
-          <input type="range" class="time-slider"
+          <input [style.background]="$timeSliderBg()" type="range" class="time-slider"
             min="0" [max]="$audioDuration()" [value]="$audioCurrentTime()"
             (input)="onSliderChangeEnd($event)" />
           <div class="current-time">{{ $audioCurrentTimeFormatted() }}</div>
-          <ion-button class="play-pause-button" fill="clear" mode="md" (click)="togglePlayPause()">
-            <ion-icon [src]="'assets/images/' + ($isAudioPlaying() ? 'pause' : 'play') + '.svg'"></ion-icon>
-          </ion-button>
-        </div>
-        <div class="volume-control">
-
+          <div class="volume-play-pause-container">
+            <div class="volume">
+              <ion-icon src="assets/images/sound.svg"></ion-icon>
+            </div>
+            <ion-button class="play-pause-button" fill="clear" mode="md" (click)="togglePlayPause()">
+              <ion-icon [src]="'assets/images/' + ($isAudioPlaying() ? 'pause' : 'play') + '.svg'"></ion-icon>
+            </ion-button>
+          </div>
         </div>
       </div>
     }
