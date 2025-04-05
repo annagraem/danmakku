@@ -56,8 +56,7 @@ video {
   align-items: center;
   margin-bottom: 2px;
 
-  .time-slider {
-    width: 100%;
+  .time-slider, .volume-slider {
     height: 9px;
     -webkit-appearance: none;
     appearance: none;
@@ -66,6 +65,15 @@ video {
     &::-webkit-slider-thumb {
       opacity: 0;
     }
+  }
+
+  .time-slider {
+    width: 100%;
+  }
+
+  .volume-slider {
+    margin-left: 10px;
+    width: 140px;
   }
 
   .current-time {
@@ -83,12 +91,13 @@ video {
     align-items: center;
 
     .volume {
-      width: calc(50% - 23px);
+      width: calc(50% - 27px);
+      display: flex;
+      align-items: center;
 
       ion-icon {
         height: 22px;
         width: 22px;
-        margin-top: 9px;
         opacity: 0.8;
       }
     }

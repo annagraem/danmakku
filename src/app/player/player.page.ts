@@ -1,9 +1,10 @@
 
 import { Component, computed, ElementRef, inject, OnInit, signal, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IonicModule, Platform } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
 import { PaintingService } from '../services/painting.service';
 import { Painting } from '../models/painting';
+import { perceptualToAmplitude } from '@discordapp/perceptual';
 
 @Component({
   selector: 'makku-player',
@@ -38,12 +39,18 @@ export class PlayerPage implements OnInit {
   });
   $isAudioPlaying = signal(false);
 
+  readonly MAX_VOLUME = 1;
+  readonly DEFAULT_VOLUME = this.MAX_VOLUME * 0.6;
+  $currentVolume = signal(this.DEFAULT_VOLUME);
+
   private readonly sliderLeftColor = 'rgba(255, 255, 255, 0.5)';
   private readonly sliderRightColor = 'rgba(255, 255, 255, 0.15)';
-  $timeSliderBg = computed(() => {
-    const currentPercentage = this.$audioCurrentTime() / this.$audioDuration() * 100;
-    return `linear-gradient(to right, ${this.sliderLeftColor} 0%, ${this.sliderLeftColor} ${currentPercentage}%, ${this.sliderRightColor} ${currentPercentage}%, ${this.sliderRightColor} 100%)`;
-  });
+  $timeSliderBg = computed(() =>
+    this.computeGradient(this.$audioCurrentTime(), this.$audioDuration())
+  );
+  $volumeSliderBg = computed(() =>
+    this.computeGradient(this.$currentVolume(), this.MAX_VOLUME)
+  );
 
   constructor() {}
 
@@ -58,6 +65,7 @@ export class PlayerPage implements OnInit {
     if (this.audioElement?.nativeElement) {
       this.$audioDuration.set(this.audioElement.nativeElement.duration);
       this.$audioCurrentTime.set(0);
+      this.audioElement.nativeElement.volume = perceptualToAmplitude(this.$currentVolume());
     }
   }
 
@@ -85,7 +93,7 @@ export class PlayerPage implements OnInit {
   /*
     User events
   */
-  onSliderChangeEnd(event: Event) {
+  onTimeSliderChangeEnd(event: Event) {
     const value = event.target instanceof HTMLInputElement ? event.target.value : undefined
     if (value) {
       this.$audioCurrentTime.set(+value);
@@ -95,9 +103,18 @@ export class PlayerPage implements OnInit {
     }
   }
 
+  onVolumeSliderChangeEnd(event: Event) {
+    const value = event.target instanceof HTMLInputElement ? event.target.value : undefined
+    if (value) {
+      this.$currentVolume.set(+value);
+      if (this.audioElement?.nativeElement) {
+        this.audioElement.nativeElement.volume = perceptualToAmplitude(this.$currentVolume());
+      }
+    }
+  }
+
   togglePlayPause() {
     if (this.audioElement?.nativeElement) {
-      console.log(this.$isAudioPlaying());
       if (this.$isAudioPlaying()) {
         this.audioElement.nativeElement.pause();
       } else {
@@ -107,6 +124,11 @@ export class PlayerPage implements OnInit {
   }
 
   goBack() {
-    this.router.navigate(['/']);
+    this.router.navigate(['/'], { replaceUrl: true });
+  }
+
+  private computeGradient(currentValue: number, maxValue: number): string {
+    const currentPercentage = currentValue / maxValue * 100;
+    return `linear-gradient(to right, ${this.sliderLeftColor} 0%, ${this.sliderLeftColor} ${currentPercentage}%, ${this.sliderRightColor} ${currentPercentage}%, ${this.sliderRightColor} 100%)`;
   }
 }

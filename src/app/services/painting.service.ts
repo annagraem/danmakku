@@ -11,9 +11,9 @@ export class PaintingService {
     {
       id: 'kid-lantern',
       name: 'ランターンの子',
-      imageSrc: 'assets/illustrations/painting-mock.jpeg',
-      videoSrc: 'assets/painting-mock.mp4',
-      audioSrc: 'assets/painting-mock.mp3'
+      imageSrc: 'assets/paintings/painting-mock.jpeg',
+      videoSrc: 'assets/paintings/painting-mock.mp4',
+      audioSrc: 'assets/paintings/painting-mock.mp3'
     }
   ];
 

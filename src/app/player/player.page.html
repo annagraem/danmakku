@@ -13,11 +13,14 @@
         <div class="audio-controls">
           <input [style.background]="$timeSliderBg()" type="range" class="time-slider"
             min="0" [max]="$audioDuration()" [value]="$audioCurrentTime()"
-            (input)="onSliderChangeEnd($event)" />
+            (input)="onTimeSliderChangeEnd($event)" />
           <div class="current-time">{{ $audioCurrentTimeFormatted() }}</div>
           <div class="volume-play-pause-container">
             <div class="volume">
               <ion-icon src="assets/images/sound.svg"></ion-icon>
+              <input [style.background]="$volumeSliderBg()" type="range" class="volume-slider"
+                min="0" [max]="MAX_VOLUME" [value]="$currentVolume()" [step]="MAX_VOLUME / 100"
+                (input)="onVolumeSliderChangeEnd($event)" />
             </div>
             <ion-button class="play-pause-button" fill="clear" mode="md" (click)="togglePlayPause()">
               <ion-icon [src]="'assets/images/' + ($isAudioPlaying() ? 'pause' : 'play') + '.svg'"></ion-icon>
