@@ -69,6 +69,6 @@ testem.log
 .DS_Store
 Thumbs.db
 
-
+hosting.d3d3.cache
 /src/assets/paintings/painting-mock.mp4
 /src/assets/paintings/painting-mock.mp3
