@@ -9,11 +9,11 @@ export class PaintingService {
 
   readonly paintings: Painting[] = [
     {
-      id: 'kid-lantern',
-      name: 'ランターンの子',
-      imageSrc: 'assets/paintings/painting-mock.jpeg',
-      videoSrc: 'assets/paintings/painting-mock.mp4',
-      audioSrc: 'assets/paintings/painting-mock.mp3'
+      id: 'yomawari',
+      name: '夜回',
+      imageSrc: 'assets/paintings/yomawari.jpg',
+      videoSrc: 'assets/paintings/yomawari.mp4',
+      audioSrc: 'assets/paintings/yomawari.mp3'
     }
   ];
 

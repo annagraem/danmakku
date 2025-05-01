@@ -1,7 +1,7 @@
 <ion-content [fullscreen]="true">
   <div class="main-container">
     @if (painting) {
-      <video autoplay="true" [muted]="'true'" loop="true" [poster]="painting.imageSrc">
+      <video preload="auto" autoplay="true" [muted]="'true'" loop="true" [poster]="painting.imageSrc" playsinline>
         <source [src]="painting.videoSrc" type="video/mp4" />
       </video>
 

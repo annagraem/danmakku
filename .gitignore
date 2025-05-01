@@ -70,5 +70,5 @@ testem.log
 Thumbs.db
 
 hosting.d3d3.cache
-/src/assets/paintings/painting-mock.mp4
-/src/assets/paintings/painting-mock.mp3
+/src/assets/paintings/*.mp4
+/src/assets/paintings/*.mp3

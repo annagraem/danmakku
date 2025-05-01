@@ -25,8 +25,8 @@ export class PlayerPage implements OnInit {
   id: string = this.activatedRoute.snapshot.paramMap.get('id') as string;
   painting: Painting | undefined;
 
-  $audioDuration = signal(100);
-  $audioCurrentTime = signal(30);
+  $audioDuration = signal(188);
+  $audioCurrentTime = signal(0);
   $audioCurrentTimeFormatted = computed(() => {
     const currentTime = this.$audioCurrentTime();
     if (currentTime >= 0) {
@@ -63,7 +63,8 @@ export class PlayerPage implements OnInit {
   */
   onLoadedMetadata() {
     if (this.audioElement?.nativeElement) {
-      this.$audioDuration.set(this.audioElement.nativeElement.duration);
+      // TODO: fix issue with computing audio duration on iOS 16
+      //this.$audioDuration.set(this.audioElement.nativeElement.duration);
       this.$audioCurrentTime.set(0);
       this.audioElement.nativeElement.volume = perceptualToAmplitude(this.$currentVolume());
     }
