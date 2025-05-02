@@ -57,13 +57,23 @@ video {
   margin-bottom: 2px;
 
   .time-slider, .volume-slider {
-    height: 9px;
+    --padding: 12px;
+    padding-top: var(--padding);
+    padding-bottom: var(--padding);
     -webkit-appearance: none;
     appearance: none;
-    border-radius: 9px;
+    cursor: pointer;
+    background: transparent;
 
     &::-webkit-slider-thumb {
       opacity: 0;
+    }
+
+    &::-webkit-slider-runnable-track {
+      --height: 9px;
+      height: var(--height);
+      border-radius: var(--height);
+      background: var(--background);
     }
   }
 
@@ -79,7 +89,7 @@ video {
   .current-time {
     width: 100%;
     text-align: right;
-    padding-top: 6px;
+    margin-top: -2px;
     padding-right: 1px;
     opacity: 0.8;
   }
