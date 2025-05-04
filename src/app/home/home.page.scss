@@ -28,19 +28,20 @@ header {
 
   line-height: 1.1;
 
-  ion-icon {
-    -webkit-animation: slide 2s ease-in-out infinite;
-    animation: slide 2s ease-in-out infinite;
-    @-webkit-keyframes slide {
-      0% { transform: translateY(0px); }
-      50% { transform: translateY(5px); }
-      100% { transform: translateY(0px); }
-    }
-    @keyframes slide {
-      0% { transform: translateY(0px); }
-      50% { transform: translateY(5px); }
-      100% { transform: translateY(0px); }
-    }
+  $animation: slide 1.2s ease-in-out infinite;
+  $translation-height: 0.6rem;
+  -webkit-animation: $animation;
+  animation: $animation;
+
+  @-webkit-keyframes slide {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY($translation-height); }
+    100% { transform: translateY(0px); }
+  }
+  @keyframes slide {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY($translation-height); }
+    100% { transform: translateY(0px); }
   }
 }
 
@@ -77,6 +78,22 @@ header {
 
   .painting-image {
     box-shadow: 0px 4px 30px 1px rgba(0,9,23,0.6);
+
+    $animation: hover 3s ease-in-out infinite;
+    $scale-factor: 1.02;
+    -webkit-animation: $animation;
+    animation: $animation;
+
+    @-webkit-keyframes hover {
+      0% { transform: scale(1, 1); }
+      50% { transform: scale($scale-factor, $scale-factor); }
+      100% { transform: scale(1, 1); }
+    }
+    @keyframes hover {
+      0% { transform: scale(1, 1); }
+      50% { transform: scale($scale-factor, $scale-factor); }
+      100% { transform: scale(1, 1); }
+    }
   }
 
   .painting-name {

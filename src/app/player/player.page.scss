@@ -57,7 +57,7 @@ video {
   margin-bottom: 2px;
 
   .time-slider, .volume-slider {
-    --padding: 12px;
+    --padding: 15px;
     padding-top: var(--padding);
     padding-bottom: var(--padding);
     -webkit-appearance: none;
@@ -89,7 +89,7 @@ video {
   .current-time {
     width: 100%;
     text-align: right;
-    margin-top: -2px;
+    margin-top: -5px;
     padding-right: 1px;
     opacity: 0.8;
   }
