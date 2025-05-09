@@ -1,10 +1,11 @@
 
-import { Component, computed, ElementRef, inject, OnInit, signal, ViewChild } from '@angular/core';
+import { Component, computed, ElementRef, inject, OnInit, signal, ViewChild, WritableSignal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { PaintingService } from '../services/painting.service';
 import { Painting } from '../models/painting';
 import { perceptualToAmplitude } from '@discordapp/perceptual';
+import { NativeAudio } from '@capacitor-community/native-audio';
 
 @Component({
   selector: 'makku-player',
@@ -23,7 +24,11 @@ export class PlayerPage implements OnInit {
   @ViewChild('audio') audioElement?: ElementRef;
 
   id: string = this.activatedRoute.snapshot.paramMap.get('id') as string;
-  painting: Painting | undefined;
+  
+  $painting: WritableSignal<Painting | undefined> = signal(undefined);
+  $paintingId = computed<string>(() =>
+    this.$painting()?.id ?? ''
+  );
 
   $audioDuration = signal(188);
   $audioCurrentTime = signal(0);
@@ -55,12 +60,46 @@ export class PlayerPage implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    this.painting = this.paintingService.getPainting(this.id);
+    this.$painting.set(this.paintingService.getPainting(this.id));
+
+    this.initializeAudio();
+
+
+
   }
+
+  private async initializeAudio() {
+    if (this.$painting()) {
+
+      
+      await NativeAudio.preload({
+        assetId: this.$paintingId(),
+        assetPath: 'public/' + this.$painting()?.audioSrc,
+        isUrl: false
+      });
+
+      this.$audioCurrentTime.set(0);
+
+      await NativeAudio.setVolume({
+        assetId: this.$paintingId(),
+        volume: perceptualToAmplitude(this.$currentVolume())
+      })
+
+      NativeAudio.play({
+        assetId: this.$paintingId(),
+        time: 0,
+      });
+    }
+  }
+
 
   /*
     Audio tag events
   */
+
+  //   <audio #audio autoplay="true" [src]="painting.audioSrc"
+  //   (loadedmetadata)="onLoadedMetadata()" (play)="onPlaying()" (pause)="onPausing()" (ended)="onEnded()" (timeupdate)="onTimeUpdate()" >
+  // </audio>
   onLoadedMetadata() {
     if (this.audioElement?.nativeElement) {
       // TODO: fix issue with computing audio duration on iOS 16
@@ -98,9 +137,13 @@ export class PlayerPage implements OnInit {
     const value = event.target instanceof HTMLInputElement ? event.target.value : undefined
     if (value) {
       this.$audioCurrentTime.set(+value);
-      if (this.audioElement?.nativeElement) {
-        this.audioElement.nativeElement.currentTime = this.$audioCurrentTime();
+      if (this.$isAudioPlaying()) {
+        NativeAudio.play({ assetId: this.$paintingId(), time: this.$audioCurrentTime() });
       }
+
+      // if (this.audioElement?.nativeElement) {
+      //   this.audioElement.nativeElement.currentTime = this.$audioCurrentTime();
+      // }
     }
   }
 
@@ -108,23 +151,39 @@ export class PlayerPage implements OnInit {
     const value = event.target instanceof HTMLInputElement ? event.target.value : undefined
     if (value) {
       this.$currentVolume.set(+value);
-      if (this.audioElement?.nativeElement) {
-        this.audioElement.nativeElement.volume = perceptualToAmplitude(this.$currentVolume());
-      }
+      NativeAudio.setVolume({
+        assetId: this.$paintingId(),
+        volume: perceptualToAmplitude(this.$currentVolume()),
+      });
+      // if (this.audioElement?.nativeElement) {
+      //   this.audioElement.nativeElement.volume = perceptualToAmplitude(this.$currentVolume());
+      // }
     }
   }
 
-  togglePlayPause() {
-    if (this.audioElement?.nativeElement) {
-      if (this.$isAudioPlaying()) {
-        this.audioElement.nativeElement.pause();
-      } else {
-        this.audioElement.nativeElement.play();
-      }
+  async togglePlayPause() {
+    const isPlaying = (await NativeAudio.isPlaying({ assetId: this.$paintingId() })).isPlaying;
+
+    if (isPlaying) {
+      NativeAudio.pause({ assetId: this.$paintingId() });
+      this.$isAudioPlaying.set(false);
+    } else {
+      NativeAudio.play({ assetId: this.$paintingId(), time: this.$audioCurrentTime() });
+      this.$isAudioPlaying.set(true);
     }
+
+    // if (this.audioElement?.nativeElement) {
+    //   if (this.$isAudioPlaying()) {
+    //     this.audioElement.nativeElement.pause();
+    //   } else {
+    //     this.audioElement.nativeElement.play();
+    //   }
+    // }
   }
 
   goBack() {
+    NativeAudio.stop({ assetId: this.$paintingId() });
+    this.$audioCurrentTime.set(0);
     this.router.navigate(['/'], { replaceUrl: true });
   }
 

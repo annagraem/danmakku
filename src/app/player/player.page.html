@@ -1,13 +1,11 @@
 <ion-content [fullscreen]="true">
   <div class="main-container">
-    @if (painting) {
+    @if ($painting() ; as painting) {
       <video preload="auto" autoplay="true" [muted]="'true'" loop="true" [poster]="painting.imageSrc" playsinline>
         <source [src]="painting.videoSrc" type="video/mp4" />
       </video>
 
-      <audio #audio autoplay="true" [src]="painting.audioSrc"
-        (loadedmetadata)="onLoadedMetadata()" (play)="onPlaying()" (pause)="onPausing()" (ended)="onEnded()" (timeupdate)="onTimeUpdate()" >
-      </audio>
+     
 
       <div class="overlay">
         <div class="audio-controls">
