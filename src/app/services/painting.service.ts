@@ -13,7 +13,8 @@ export class PaintingService {
       name: '夜回',
       imageSrc: 'assets/paintings/yomawari.jpg',
       videoSrc: 'assets/paintings/yomawari.mp4',
-      audioSrc: 'assets/paintings/yomawari.mp3'
+      audioSrc: 'assets/paintings/yomawari.mp3',
+      audioDuration: 188,
     }
   ];
 

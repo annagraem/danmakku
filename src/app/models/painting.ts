@@ -4,4 +4,5 @@ export interface Painting {
   imageSrc: string;
   videoSrc: string;
   audioSrc: string;
+  audioDuration: number;
 }
