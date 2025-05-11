@@ -100,6 +100,7 @@ export class PlayerPage implements OnInit {
         const currentTime = (await NativeAudio.getCurrentTime({ assetId: this.$paintingId() })).currentTime;
         const isPlaying = (await NativeAudio.isPlaying({ assetId: this.$paintingId() })).isPlaying;
 
+        console.log('setInterval', currentTime, isPlaying, this.$audioDuration())
         if (isPlaying) {
           this.$audioCurrentTime.set(currentTime);
         } else {
@@ -129,6 +130,7 @@ export class PlayerPage implements OnInit {
     const value = event.target instanceof HTMLInputElement ? event.target.value : undefined
     if (value) {
       this.$audioCurrentTime.set(+value);
+      console.log('time slider change', this.$audioCurrentTime(), this.$isAudioPlaying());
       if (this.$isAudioPlaying()) {
         NativeAudio.play({ assetId: this.$paintingId(), time: this.$audioCurrentTime() });
       }
@@ -148,6 +150,8 @@ export class PlayerPage implements OnInit {
 
   async togglePlayPause() {
     const isPlaying = (await NativeAudio.isPlaying({ assetId: this.$paintingId() })).isPlaying;
+
+    console.log('togglePlayPause', isPlaying)
 
     if (isPlaying) {
       NativeAudio.pause({ assetId: this.$paintingId() });

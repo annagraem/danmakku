@@ -58,6 +58,8 @@ video {
 
   .time-slider, .volume-slider {
     --padding: 15px;
+    --height: 9px;
+
     padding-top: var(--padding);
     padding-bottom: var(--padding);
     -webkit-appearance: none;
@@ -65,12 +67,19 @@ video {
     cursor: pointer;
     background: transparent;
 
+    pointer-events: auto;
+
     &::-webkit-slider-thumb {
       opacity: 0;
+      width: 0px;
+      //height: calc(2 * var(--padding) + var(--height));
+      //margin-top: calc(-1 * var(--padding));
+      background: white;
+      -webkit-appearance: none;
+      pointer-events: none;
     }
 
     &::-webkit-slider-runnable-track {
-      --height: 9px;
       height: var(--height);
       border-radius: var(--height);
       background: var(--background);
