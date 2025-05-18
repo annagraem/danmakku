@@ -69,16 +69,6 @@ video {
 
     pointer-events: auto;
 
-    &::-webkit-slider-thumb {
-      opacity: 0;
-      width: 0px;
-      //height: calc(2 * var(--padding) + var(--height));
-      //margin-top: calc(-1 * var(--padding));
-      background: white;
-      -webkit-appearance: none;
-      pointer-events: none;
-    }
-
     &::-webkit-slider-runnable-track {
       height: var(--height);
       border-radius: var(--height);
@@ -88,11 +78,25 @@ video {
 
   .time-slider {
     width: 100%;
+
+    &::-webkit-slider-thumb {
+      opacity: 0;
+      width: 0px;
+      -webkit-appearance: none;
+      pointer-events: none;
+    }
   }
 
   .volume-slider {
     margin-left: 10px;
     width: 140px;
+
+    &::-webkit-slider-thumb {
+      opacity: 0;
+      width: 40px;
+      height: calc(2 * var(--padding) + var(--height));
+      margin-top: calc(-1 * var(--padding));
+    }
   }
 
   .current-time {
